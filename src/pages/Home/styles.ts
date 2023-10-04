@@ -17,7 +17,7 @@ export const PublicationContainer = styled.section`
   row-gap: 2rem;
   column-gap: 2rem;
 
-  margin-top: 2rem;
+  margin-top: 3rem;
 `
 
 export const PublicationCard = styled.div`

@@ -7,6 +7,7 @@ export const ProfileContainer = styled.section`
   border-radius: 10px;
   padding: 2rem 2.5rem;
   margin-top: -6rem;
+  margin-bottom: 4.5rem;
   min-width: 41rem;
 
   display: flex;

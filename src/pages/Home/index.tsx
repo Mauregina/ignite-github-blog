@@ -1,4 +1,5 @@
 import { Profile } from './components/Profile'
+import { SearchForm } from './components/SearchForm'
 import {
   HomeContainer,
   PublicationContainer,
@@ -11,6 +12,7 @@ export function Home() {
   return (
     <HomeContainer>
       <Profile />
+      <SearchForm />
       <PublicationContainer>
         <PublicationCard>
           <CardTitle>
