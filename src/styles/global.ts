@@ -11,4 +11,10 @@ export const GlobalStyle = createGlobalStyle`
         background-color: ${(props) => props.theme['base-background']};
         color: ${(props) => props.theme['base-text']};
     }
+
+    body, input, button {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+    }
 `
