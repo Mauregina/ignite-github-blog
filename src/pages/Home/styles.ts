@@ -12,6 +12,26 @@ export const HomeContainer = styled.main`
   padding: 0 1rem 1rem;
 `
 
+export const Summary = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 0.75rem;
+
+  strong {
+    font-size: 1.125rem;
+    color: ${(props) => props.theme['base-subtitle']};
+  }
+
+  span {
+    font-size: 0.875rem;
+    color: ${(props) => props.theme['base-span']};
+    white-space: nowrap;
+  }
+`
+
 export const PublicationContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);

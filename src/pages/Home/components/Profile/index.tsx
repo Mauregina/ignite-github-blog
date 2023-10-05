@@ -31,8 +31,9 @@ export function Profile() {
   const [userInfo, setUserInfo] = useState<User | undefined>(undefined)
 
   async function loadUserInfo() {
+    const userName = 'mauregina'
     try {
-      const response = await api.get('users/Mauregina')
+      const response = await api.get('users/' + userName)
 
       if (response.status === 200) {
         setUserInfo(response.data)
