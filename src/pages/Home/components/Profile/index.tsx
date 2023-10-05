@@ -80,9 +80,7 @@ export function Profile() {
           </Card>
         </>
       ) : (
-        <NoDataContainer>
-          Não foi possível recuperar dados do profile
-        </NoDataContainer>
+        <NoDataContainer>Não há dados a serem exibidos</NoDataContainer>
       )}
     </ProfileContainer>
   )

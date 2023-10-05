@@ -13,6 +13,13 @@ export const PostContainer = styled.div`
   padding: 0 1rem 1rem;
 `
 
+export const NoDataContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 export const PostHeader = styled.div`
   width: 100%;
   border-radius: 10px;

@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import { formatDistanceToNow } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 import removeMarkdown from 'remove-markdown'
 
 import { api } from '../../lib/axios'
@@ -14,6 +12,7 @@ import {
   CardText,
   Summary,
 } from './styles'
+import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
 
 interface Issue {
   id: number
@@ -35,6 +34,7 @@ export function Home() {
       const response = await api.get('search/issues', {
         params: {
           q: `${query || ''} repo:${userName}/${repository}`,
+          sort: 'updated',
         },
       })
 
@@ -50,11 +50,6 @@ export function Home() {
     fetchIssues()
   }, [])
 
-  function updatedDateRelativeToNow(updatedDateStr: string) {
-    const updatedDate = new Date(updatedDateStr)
-    return formatDistanceToNow(updatedDate, { locale: ptBR, addSuffix: true })
-  }
-
   return (
     <HomeContainer>
       <Profile />
@@ -69,7 +64,7 @@ export function Home() {
             <PublicationCard key={issue.id} to={`post/${issue.number}`}>
               <CardTitle>
                 <strong>{issue.title}</strong>
-                <span>{updatedDateRelativeToNow(issue.updated_at)}</span>
+                <span>{dateRelativeToNow(issue.updated_at)}</span>
               </CardTitle>
               <CardText>{removeMarkdown(issue.body)}</CardText>
             </PublicationCard>

@@ -1,4 +1,8 @@
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { ArrowSquareOut, CaretLeft } from 'phosphor-react'
+
+import { api } from '../../lib/axios'
 import {
   CalendarBlankIcon,
   ChatCircleIcon,
@@ -6,47 +10,81 @@ import {
   FooterContent,
   GitHubIcon,
   LinkContent,
+  NoDataContainer,
   PostContainer,
   PostContent,
   PostHeader,
   TitleContent,
 } from './styles'
-import { useParams } from 'react-router-dom'
+import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
+
+interface Issue {
+  title: string
+  html_url: string
+  comments: number
+  updated_at: string
+}
 
 export function Post() {
   const { id } = useParams()
-  console.log(id)
+  const [issueInfo, setIssueInfo] = useState<Issue | undefined>(undefined)
+
+  useEffect(() => {
+    async function fetchIssue() {
+      const userName = 'mauregina'
+      const repository = 'ignite-github-blog'
+      try {
+        const response = await api.get(
+          `repos/${userName}/${repository}/issues/${id}`,
+        )
+        if (response.status === 200) {
+          setIssueInfo(response.data)
+        }
+      } catch (error) {
+        console.error('Error ', error)
+      }
+    }
+    if (id !== undefined) {
+      fetchIssue()
+    }
+  }, [id])
 
   return (
     <PostContainer>
-      <PostHeader>
-        <TitleContent>
-          <LinkContent to="/">
-            <CaretLeft size={12} />
-            <span>VOLTAR</span>
-          </LinkContent>
-          <LinkContent to="https://github.com/Mauregina">
-            <span>VER NO GITHUB</span>
-            <ArrowSquareOut size={12} />
-          </LinkContent>
-        </TitleContent>
-        <strong>JavaScript data types and data structures</strong>
-        <Footer>
-          <FooterContent>
-            <GitHubIcon weight="fill" size={18} />
-            <span>cameronwll</span>
-          </FooterContent>
-          <FooterContent>
-            <CalendarBlankIcon weight="fill" size={18} />
-            <span>Rocketseat</span>
-          </FooterContent>
-          <FooterContent>
-            <ChatCircleIcon weight="fill" size={18} />
-            <span>32 seguidores</span>
-          </FooterContent>
-        </Footer>
-      </PostHeader>
-      <PostContent>Texto</PostContent>
+      {issueInfo ? (
+        <>
+          <PostHeader>
+            <TitleContent>
+              <LinkContent to="/">
+                <CaretLeft size={12} />
+                <span>VOLTAR</span>
+              </LinkContent>
+              <LinkContent to={issueInfo.html_url}>
+                <span>VER NO GITHUB</span>
+                <ArrowSquareOut size={12} />
+              </LinkContent>
+            </TitleContent>
+            <strong>{issueInfo.title}</strong>
+            <Footer>
+              <FooterContent>
+                <GitHubIcon weight="fill" size={18} />
+                <span>cameronwll</span>
+              </FooterContent>
+              <FooterContent>
+                <CalendarBlankIcon weight="fill" size={18} />
+                <span>{dateRelativeToNow(issueInfo.updated_at)}</span>
+              </FooterContent>
+              <FooterContent>
+                <ChatCircleIcon weight="fill" size={18} />
+                <span>{issueInfo.comments} comentários</span>
+              </FooterContent>
+            </Footer>
+          </PostHeader>
+          <PostContent>Texto</PostContent>
+        </>
+      ) : (
+        <NoDataContainer>Não há dados a serem exibidos</NoDataContainer>
+      )}
     </PostContainer>
   )
 }
