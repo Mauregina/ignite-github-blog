@@ -14,7 +14,7 @@ export function Home() {
       <Profile />
       <SearchForm />
       <PublicationContainer>
-        <PublicationCard to={'/post'}>
+        <PublicationCard to={'/post/1'}>
           <CardTitle>
             <strong>JavaScript data types and data structures</strong>
             <span>Há 1 dia</span>

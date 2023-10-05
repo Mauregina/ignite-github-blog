@@ -11,8 +11,12 @@ import {
   PostHeader,
   TitleContent,
 } from './styles'
+import { useParams } from 'react-router-dom'
 
 export function Post() {
+  const parametros = useParams()
+  console.log(parametros.id)
+
   return (
     <PostContainer>
       <PostHeader>
