@@ -1,5 +1,48 @@
-import { PostContainer } from './styles'
+import { ArrowSquareOut, CaretLeft } from 'phosphor-react'
+import {
+  CalendarBlankIcon,
+  ChatCircleIcon,
+  Footer,
+  FooterContent,
+  GitHubIcon,
+  LinkContent,
+  PostContainer,
+  PostContent,
+  PostHeader,
+  TitleContent,
+} from './styles'
 
 export function Post() {
-  return <PostContainer>POST</PostContainer>
+  return (
+    <PostContainer>
+      <PostHeader>
+        <TitleContent>
+          <LinkContent to="https://github.com/Mauregina">
+            <CaretLeft size={12} />
+            <span>VOLTAR</span>
+          </LinkContent>
+          <LinkContent to="https://github.com/Mauregina">
+            <span>VER NO GITHUB</span>
+            <ArrowSquareOut size={12} />
+          </LinkContent>
+        </TitleContent>
+        <strong>JavaScript data types and data structures</strong>
+        <Footer>
+          <FooterContent>
+            <GitHubIcon weight="fill" size={18} />
+            <span>cameronwll</span>
+          </FooterContent>
+          <FooterContent>
+            <CalendarBlankIcon weight="fill" size={18} />
+            <span>Rocketseat</span>
+          </FooterContent>
+          <FooterContent>
+            <ChatCircleIcon weight="fill" size={18} />
+            <span>32 seguidores</span>
+          </FooterContent>
+        </Footer>
+      </PostHeader>
+      <PostContent>Texto</PostContent>
+    </PostContainer>
+  )
 }

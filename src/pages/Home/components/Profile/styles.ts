@@ -55,6 +55,7 @@ export const LinkContent = styled(Link)`
 
   text-decoration: none;
   border-bottom: 1px solid transparent;
+  transition: 0.5s;
 
   &:hover {
     border-bottom: 1px solid;

@@ -11,6 +11,7 @@ export const SearchTotal = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  gap: 1rem;
 
   strong {
     font-size: 1.125rem;
@@ -20,6 +21,7 @@ export const SearchTotal = styled.div`
   span {
     font-size: 0.875rem;
     color: ${(props) => props.theme['base-span']};
+    white-space: nowrap;
   }
 `
 

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const HomeContainer = styled.main`
@@ -20,7 +21,7 @@ export const PublicationContainer = styled.section`
   margin-top: 3rem;
 `
 
-export const PublicationCard = styled.div`
+export const PublicationCard = styled(Link)`
   border-radius: 10px;
   background: ${(props) => props.theme['base-post']};
   padding: 2rem;
@@ -30,6 +31,14 @@ export const PublicationCard = styled.div`
   gap: 1.25rem;
 
   min-width: 25rem;
+
+  border: 2px solid transparent;
+  text-decoration: none;
+  transition: 0.5s;
+
+  &:hover {
+    border: 2px solid ${(props) => props.theme['base-label']};
+  }
 `
 
 export const CardTitle = styled.div`
@@ -52,6 +61,8 @@ export const CardTitle = styled.div`
 `
 
 export const CardText = styled.div`
+  color: ${(props) => props.theme['base-text']};
+
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
