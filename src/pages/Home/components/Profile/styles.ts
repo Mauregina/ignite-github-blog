@@ -18,9 +18,19 @@ export const ProfileContainer = styled.section`
   background-color: ${(props) => props.theme['base-profile']};
 `
 
+export const NoDataContainer = styled.div`
+  flex: 1;
+  height: 9.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 export const Avatar = styled.img`
   width: 9.25rem;
   height: 9.25rem;
+  border-radius: 8px;
 `
 
 export const Card = styled.div`

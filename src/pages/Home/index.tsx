@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { Profile } from './components/Profile'
 import { SearchForm } from './components/SearchForm'
 import {
@@ -9,6 +11,8 @@ import {
 } from './styles'
 
 export function Home() {
+  useEffect(() => {}, [])
+
   return (
     <HomeContainer>
       <Profile />

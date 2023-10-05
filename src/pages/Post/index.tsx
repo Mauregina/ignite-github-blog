@@ -14,14 +14,14 @@ import {
 import { useParams } from 'react-router-dom'
 
 export function Post() {
-  const parametros = useParams()
-  console.log(parametros.id)
+  const { id } = useParams()
+  console.log(id)
 
   return (
     <PostContainer>
       <PostHeader>
         <TitleContent>
-          <LinkContent to="https://github.com/Mauregina">
+          <LinkContent to="/">
             <CaretLeft size={12} />
             <span>VOLTAR</span>
           </LinkContent>

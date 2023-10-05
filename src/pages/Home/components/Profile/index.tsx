@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import { ArrowSquareOut } from 'phosphor-react'
+
 import {
   Avatar,
   BuildingsIcon,
@@ -7,45 +10,79 @@ import {
   FooterContent,
   GitHubIcon,
   LinkContent,
+  NoDataContainer,
   ProfileContainer,
   TitleContent,
   UsersIcon,
 } from './styles'
-import Photo from '.././../../../assets/avatar.png'
-import { ArrowSquareOut } from 'phosphor-react'
+import { api } from '../../../../lib/axios'
+
+interface User {
+  name: string
+  login: string
+  bio: string
+  html_url: string
+  avatar_url: string
+  company?: string
+  followers: number
+}
 
 export function Profile() {
+  const [userInfo, setUserInfo] = useState<User | undefined>(undefined)
+
+  async function loadUserInfo() {
+    try {
+      const response = await api.get('users/Mauregina')
+
+      if (response.status === 200) {
+        setUserInfo(response.data)
+      }
+    } catch (error) {
+      console.error('Error ', error)
+    }
+  }
+
+  useEffect(() => {
+    loadUserInfo()
+  }, [])
+
   return (
     <ProfileContainer>
-      <Avatar src={Photo} alt="" />
-      <Card>
-        <TitleContent>
-          <strong>Cameron Williamson</strong>
-          <LinkContent to="https://github.com/Mauregina">
-            <span>GITHUB</span>
-            <ArrowSquareOut size={12} />
-          </LinkContent>
-        </TitleContent>
-        <Description>
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-          viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat
-          pulvinar vel mass.
-        </Description>
-        <Footer>
-          <FooterContent>
-            <GitHubIcon weight="fill" size={18} />
-            <span>cameronwll</span>
-          </FooterContent>
-          <FooterContent>
-            <BuildingsIcon weight="fill" size={18} />
-            <span>Rocketseat</span>
-          </FooterContent>
-          <FooterContent>
-            <UsersIcon weight="fill" size={18} />
-            <span>32 seguidores</span>
-          </FooterContent>
-        </Footer>
-      </Card>
+      {userInfo ? (
+        <>
+          <Avatar src={userInfo.avatar_url} alt="" />
+          <Card>
+            <TitleContent>
+              <strong>{userInfo.name}</strong>
+              <LinkContent to={userInfo.html_url}>
+                <span>GITHUB</span>
+                <ArrowSquareOut size={12} />
+              </LinkContent>
+            </TitleContent>
+            <Description>{userInfo.bio}</Description>
+            <Footer>
+              <FooterContent>
+                <GitHubIcon weight="fill" size={18} />
+                <span>{userInfo.login}</span>
+              </FooterContent>
+              {userInfo.company && (
+                <FooterContent>
+                  <BuildingsIcon weight="fill" size={18} />
+                  <span>{userInfo.company}</span>
+                </FooterContent>
+              )}
+              <FooterContent>
+                <UsersIcon weight="fill" size={18} />
+                <span>{userInfo.followers} seguidores</span>
+              </FooterContent>
+            </Footer>
+          </Card>
+        </>
+      ) : (
+        <NoDataContainer>
+          Não foi possível recuperar dados do profile
+        </NoDataContainer>
+      )}
     </ProfileContainer>
   )
 }
