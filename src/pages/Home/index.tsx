@@ -13,6 +13,7 @@ import {
   Summary,
 } from './styles'
 import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
+import { Loading } from '../../components/Loading'
 
 interface Issue {
   id: number
@@ -24,6 +25,8 @@ interface Issue {
 
 export function Home() {
   const [issues, setIssues] = useState<Issue[]>([])
+  const [loading, setLoading] = useState(false)
+
   const totalIssues = issues.length
 
   async function fetchIssues(query?: string) {
@@ -31,6 +34,7 @@ export function Home() {
     const repository = 'ignite-github-blog'
 
     try {
+      setLoading(true)
       const response = await api.get('search/issues', {
         params: {
           q: `${query || ''} repo:${userName}/${repository}`,
@@ -43,6 +47,8 @@ export function Home() {
       }
     } catch (error) {
       console.error('Error ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -58,18 +64,22 @@ export function Home() {
         <span>{totalIssues} publicações</span>
       </Summary>
       <SearchForm onFetchIssues={fetchIssues} />
-      {totalIssues > 0 && (
-        <PublicationContainer>
-          {issues.map((issue) => (
-            <PublicationCard key={issue.id} to={`post/${issue.number}`}>
-              <CardTitle>
-                <strong>{issue.title}</strong>
-                <span>{dateRelativeToNow(issue.updated_at)}</span>
-              </CardTitle>
-              <CardText>{removeMarkdown(issue.body)}</CardText>
-            </PublicationCard>
-          ))}
-        </PublicationContainer>
+      {loading ? (
+        <Loading />
+      ) : (
+        totalIssues > 0 && (
+          <PublicationContainer>
+            {issues.map((issue) => (
+              <PublicationCard key={issue.id} to={`post/${issue.number}`}>
+                <CardTitle>
+                  <strong>{issue.title}</strong>
+                  <span>{dateRelativeToNow(issue.updated_at)}</span>
+                </CardTitle>
+                <CardText>{removeMarkdown(issue.body)}</CardText>
+              </PublicationCard>
+            ))}
+          </PublicationContainer>
+        )
       )}
     </HomeContainer>
   )

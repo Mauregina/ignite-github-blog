@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { ArrowSquareOut } from 'phosphor-react'
 
+import { api } from '../../../../lib/axios'
+
 import {
   Avatar,
   BuildingsIcon,
@@ -15,7 +17,7 @@ import {
   TitleContent,
   UsersIcon,
 } from './styles'
-import { api } from '../../../../lib/axios'
+import { Loading } from '../../../../components/Loading'
 
 interface User {
   name: string
@@ -29,10 +31,12 @@ interface User {
 
 export function Profile() {
   const [userInfo, setUserInfo] = useState<User | undefined>(undefined)
+  const [loading, setLoading] = useState(false)
 
   async function loadUserInfo() {
     const userName = 'mauregina'
     try {
+      setLoading(true)
       const response = await api.get('users/' + userName)
 
       if (response.status === 200) {
@@ -40,6 +44,8 @@ export function Profile() {
       }
     } catch (error) {
       console.error('Error ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -49,7 +55,9 @@ export function Profile() {
 
   return (
     <ProfileContainer>
-      {userInfo ? (
+      {loading ? (
+        <Loading />
+      ) : userInfo ? (
         <>
           <Avatar src={userInfo.avatar_url} alt="" />
           <Card>

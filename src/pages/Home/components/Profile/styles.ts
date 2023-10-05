@@ -20,7 +20,7 @@ export const ProfileContainer = styled.section`
 
 export const NoDataContainer = styled.div`
   flex: 1;
-  height: 9.25rem;
+  padding: 2.6rem;
 
   display: flex;
   align-items: center;

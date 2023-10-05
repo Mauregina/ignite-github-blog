@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
-import { SearchFormContainer } from './styles'
+
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+
+import { SearchFormContainer } from './styles'
 
 const searchFormValidationSchema = zod.object({
   query: zod.string(),
@@ -26,8 +28,6 @@ export function SearchForm({ onFetchIssues }: SearchFormProps) {
   })
 
   async function handleSearchIssues(data: SearchFormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
     onFetchIssues(data.query)
   }
 

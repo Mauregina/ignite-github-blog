@@ -18,6 +18,7 @@ import {
   TitleContent,
 } from './styles'
 import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
+import { Loading } from '../../components/Loading'
 
 interface Issue {
   title: string
@@ -30,12 +31,15 @@ interface Issue {
 export function Post() {
   const { id } = useParams()
   const [issueInfo, setIssueInfo] = useState<Issue | undefined>(undefined)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     async function fetchIssue() {
       const userName = 'mauregina'
       const repository = 'ignite-github-blog'
+
       try {
+        setLoading(true)
         const response = await api.get(
           `repos/${userName}/${repository}/issues/${id}`,
         )
@@ -44,6 +48,8 @@ export function Post() {
         }
       } catch (error) {
         console.error('Error ', error)
+      } finally {
+        setLoading(false)
       }
     }
     if (id !== undefined) {
@@ -53,7 +59,9 @@ export function Post() {
 
   return (
     <PostContainer>
-      {issueInfo ? (
+      {loading ? (
+        <Loading />
+      ) : issueInfo ? (
         <>
           <PostHeader>
             <TitleContent>
