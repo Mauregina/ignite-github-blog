@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-
+import { formatDistanceToNow } from 'date-fns'
+import removeMarkdown from 'remove-markdown'
 import { Profile } from './components/Profile'
 import { SearchForm } from './components/SearchForm'
 import {
@@ -10,11 +11,14 @@ import {
   CardText,
 } from './styles'
 import { api } from '../../lib/axios'
+import { ptBR } from 'date-fns/locale'
 
 interface Issue {
   id: number
   number: number
   title: string
+  body: string
+  updated_at: string
 }
 
 export function Home() {
@@ -24,11 +28,10 @@ export function Home() {
   async function loadIssues() {
     try {
       const response = await api.get(
-        'search/issues?q=na%20repo:mauregina/ignite-github-blog',
+        'search/issues?q=%20repo:mauregina/ignite-github-blog',
       )
 
       if (response.status === 200) {
-        console.log(response.data)
         setIssues(response.data.items)
       }
     } catch (error) {
@@ -40,6 +43,11 @@ export function Home() {
     loadIssues()
   }, [])
 
+  function updatedDateRelativeToNow(updatedDateStr: string) {
+    const updatedDate = new Date(updatedDateStr)
+    return formatDistanceToNow(updatedDate, { locale: ptBR, addSuffix: true })
+  }
+
   return (
     <HomeContainer>
       <Profile />
@@ -50,18 +58,9 @@ export function Home() {
             <PublicationCard key={issue.id} to={`post/${issue.number}`}>
               <CardTitle>
                 <strong>{issue.title}</strong>
-                <span>Há 1 dia</span>
+                <span>{updatedDateRelativeToNow(issue.updated_at)}</span>
               </CardTitle>
-              <CardText>
-                Programming languages all have built-in data structures, but
-                these often differ from one language to another. This article
-                attempts to list the built-in data structures available in
-                JavaScript and what properties they have. These can be used to
-                build other data structures. Wherever possible, comparisons with
-                other languages are drawn. Dynamic typing JavaScript is a
-                loosely typed and dynamic language. Variables in JavaScript are
-                not directly associated with any particular value type
-              </CardText>
+              <CardText>{removeMarkdown(issue.body)}</CardText>
             </PublicationCard>
           ))}
         </PublicationContainer>
