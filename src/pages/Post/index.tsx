@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { ArrowSquareOut, CaretLeft } from 'phosphor-react'
+import ReactMarkdown from 'react-markdown'
 
 import { api } from '../../lib/axios'
 import {
@@ -20,6 +21,7 @@ import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
 
 interface Issue {
   title: string
+  body: string
   html_url: string
   comments: number
   updated_at: string
@@ -80,7 +82,9 @@ export function Post() {
               </FooterContent>
             </Footer>
           </PostHeader>
-          <PostContent>Texto</PostContent>
+          <PostContent>
+            <ReactMarkdown>{issueInfo.body}</ReactMarkdown>
+          </PostContent>
         </>
       ) : (
         <NoDataContainer>Não há dados a serem exibidos</NoDataContainer>
