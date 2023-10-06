@@ -98,7 +98,3 @@ export const CalendarBlankIcon = styled(CalendarBlank)`
 export const ChatCircleIcon = styled(ChatCircle)`
   color: ${(props) => props.theme['base-label']};
 `
-
-export const PostContent = styled.div`
-  padding: 2.5rem 2rem;
-`

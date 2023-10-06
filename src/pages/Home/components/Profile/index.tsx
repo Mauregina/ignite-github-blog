@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { ArrowSquareOut } from 'phosphor-react'
 
 import { api } from '../../../../lib/axios'
@@ -22,7 +22,6 @@ import { UserContext } from '../../../../contexts/UserContext'
 
 interface User {
   name: string
-  login: string
   bio: string
   html_url: string
   avatar_url: string
@@ -35,7 +34,7 @@ export function Profile() {
   const [userInfo, setUserInfo] = useState<User | undefined>(undefined)
   const [loading, setLoading] = useState(false)
 
-  async function loadUserInfo() {
+  const loadUserInfo = useCallback(async () => {
     try {
       setLoading(true)
       const response = await api.get('users/' + userName)
@@ -48,11 +47,11 @@ export function Profile() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [userName])
 
   useEffect(() => {
     loadUserInfo()
-  }, [])
+  }, [loadUserInfo])
 
   return (
     <ProfileContainer>
@@ -73,7 +72,7 @@ export function Profile() {
             <Footer>
               <FooterContent>
                 <GitHubIcon weight="fill" size={18} />
-                <span>{userInfo.login}</span>
+                <span>{userName}</span>
               </FooterContent>
               {userInfo.company && (
                 <FooterContent>

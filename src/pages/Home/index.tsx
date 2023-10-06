@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import removeMarkdown from 'remove-markdown'
 
 import { api } from '../../lib/axios'
@@ -31,29 +31,32 @@ export function Home() {
 
   const totalIssues = issues.length
 
-  async function fetchIssues(query?: string) {
-    try {
-      setLoading(true)
-      const response = await api.get('search/issues', {
-        params: {
-          q: `${query || ''} repo:${userName}/${repository}`,
-          sort: 'updated',
-        },
-      })
+  const fetchIssues = useCallback(
+    async (query?: string) => {
+      try {
+        setLoading(true)
+        const response = await api.get('search/issues', {
+          params: {
+            q: `${query || ''} repo:${userName}/${repository}`,
+            sort: 'updated',
+          },
+        })
 
-      if (response.status === 200) {
-        setIssues(response.data.items)
+        if (response.status === 200) {
+          setIssues(response.data.items)
+        }
+      } catch (error) {
+        console.error('Error ', error)
+      } finally {
+        setLoading(false)
       }
-    } catch (error) {
-      console.error('Error ', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+    },
+    [repository, userName],
+  )
 
   useEffect(() => {
     fetchIssues()
-  }, [])
+  }, [fetchIssues])
 
   return (
     <HomeContainer>

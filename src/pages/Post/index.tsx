@@ -1,7 +1,7 @@
+/* eslint-disable react/no-children-prop */
 import { useParams } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { ArrowSquareOut, CaretLeft } from 'phosphor-react'
-import ReactMarkdown from 'react-markdown'
 
 import { api } from '../../lib/axios'
 import {
@@ -13,13 +13,13 @@ import {
   LinkContent,
   NoDataContainer,
   PostContainer,
-  PostContent,
   PostHeader,
   TitleContent,
 } from './styles'
 import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
 import { Loading } from '../../components/Loading'
 import { UserContext } from '../../contexts/UserContext'
+import { PostContent } from './PostContent'
 
 interface Issue {
   title: string
@@ -35,26 +35,27 @@ export function Post() {
   const [issueInfo, setIssueInfo] = useState<Issue | undefined>(undefined)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    async function fetchIssue() {
-      try {
-        setLoading(true)
-        const response = await api.get(
-          `repos/${userName}/${repository}/issues/${id}`,
-        )
-        if (response.status === 200) {
-          setIssueInfo(response.data)
-        }
-      } catch (error) {
-        console.error('Error ', error)
-      } finally {
-        setLoading(false)
+  const fetchIssue = useCallback(async () => {
+    try {
+      setLoading(true)
+      const response = await api.get(
+        `repos/${userName}/${repository}/issues/${id}`,
+      )
+      if (response.status === 200) {
+        setIssueInfo(response.data)
       }
+    } catch (error) {
+      console.error('Error ', error)
+    } finally {
+      setLoading(false)
     }
+  }, [id, repository, userName])
+
+  useEffect(() => {
     if (id !== undefined) {
       fetchIssue()
     }
-  }, [id])
+  }, [fetchIssue, id])
 
   return (
     <PostContainer>
@@ -77,7 +78,7 @@ export function Post() {
             <Footer>
               <FooterContent>
                 <GitHubIcon weight="fill" size={18} />
-                <span>cameronwll</span>
+                <span>{userName}</span>
               </FooterContent>
               <FooterContent>
                 <CalendarBlankIcon weight="fill" size={18} />
@@ -89,9 +90,7 @@ export function Post() {
               </FooterContent>
             </Footer>
           </PostHeader>
-          <PostContent>
-            <ReactMarkdown>{issueInfo.body}</ReactMarkdown>
-          </PostContent>
+          <PostContent children={issueInfo.body} />
         </>
       ) : (
         <NoDataContainer>Não há dados a serem exibidos</NoDataContainer>
