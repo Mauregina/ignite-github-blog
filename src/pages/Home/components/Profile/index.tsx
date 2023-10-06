@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ArrowSquareOut } from 'phosphor-react'
 
 import { api } from '../../../../lib/axios'
@@ -18,6 +18,7 @@ import {
   UsersIcon,
 } from './styles'
 import { Loading } from '../../../../components/Loading'
+import { UserContext } from '../../../../contexts/UserContext'
 
 interface User {
   name: string
@@ -30,11 +31,11 @@ interface User {
 }
 
 export function Profile() {
+  const { userName } = useContext(UserContext)
   const [userInfo, setUserInfo] = useState<User | undefined>(undefined)
   const [loading, setLoading] = useState(false)
 
   async function loadUserInfo() {
-    const userName = 'mauregina'
     try {
       setLoading(true)
       const response = await api.get('users/' + userName)

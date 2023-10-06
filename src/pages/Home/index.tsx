@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import removeMarkdown from 'remove-markdown'
 
 import { api } from '../../lib/axios'
@@ -14,6 +14,7 @@ import {
 } from './styles'
 import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
 import { Loading } from '../../components/Loading'
+import { UserContext } from '../../contexts/UserContext'
 
 interface Issue {
   id: number
@@ -24,15 +25,13 @@ interface Issue {
 }
 
 export function Home() {
+  const { userName, repository } = useContext(UserContext)
   const [issues, setIssues] = useState<Issue[]>([])
   const [loading, setLoading] = useState(false)
 
   const totalIssues = issues.length
 
   async function fetchIssues(query?: string) {
-    const userName = 'mauregina'
-    const repository = 'ignite-github-blog'
-
     try {
       setLoading(true)
       const response = await api.get('search/issues', {

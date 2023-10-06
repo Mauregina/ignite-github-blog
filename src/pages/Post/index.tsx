@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ArrowSquareOut, CaretLeft } from 'phosphor-react'
 import ReactMarkdown from 'react-markdown'
 
@@ -19,6 +19,7 @@ import {
 } from './styles'
 import { dateRelativeToNow } from '../../utils/calculateDateRelativeToNow'
 import { Loading } from '../../components/Loading'
+import { UserContext } from '../../contexts/UserContext'
 
 interface Issue {
   title: string
@@ -30,14 +31,12 @@ interface Issue {
 
 export function Post() {
   const { id } = useParams()
+  const { userName, repository } = useContext(UserContext)
   const [issueInfo, setIssueInfo] = useState<Issue | undefined>(undefined)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     async function fetchIssue() {
-      const userName = 'mauregina'
-      const repository = 'ignite-github-blog'
-
       try {
         setLoading(true)
         const response = await api.get(
