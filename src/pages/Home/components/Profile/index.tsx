@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState, memo } from 'react'
 import { ArrowSquareOut } from 'phosphor-react'
 
 import { api } from '../../../../lib/axios'
@@ -29,7 +29,7 @@ interface User {
   followers: number
 }
 
-export function Profile() {
+function ProfileComponent() {
   const { userName } = useContext(UserContext)
   const [userInfo, setUserInfo] = useState<User | undefined>(undefined)
   const [loading, setLoading] = useState(false)
@@ -93,3 +93,5 @@ export function Profile() {
     </ProfileContainer>
   )
 }
+
+export const Profile = memo(ProfileComponent)

@@ -28,7 +28,7 @@ export function SearchForm({ onFetchIssues }: SearchFormProps) {
   })
 
   async function handleSearchIssues(data: SearchFormInputs) {
-    onFetchIssues(data.query)
+    await onFetchIssues(data.query)
   }
 
   return (
