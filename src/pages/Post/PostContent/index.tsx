@@ -1,4 +1,3 @@
-/* eslint-disable react/no-children-prop */
 import rangeParser from 'parse-numeric-range'
 import ReactMarkdown from 'react-markdown'
 
@@ -14,8 +13,6 @@ interface PostContentProps {
 export const PostContent: React.FC<PostContentProps> = ({
   children,
 }: PostContentProps) => {
-  // const { colors } = useTheme()
-
   return (
     <PostContainer>
       <ReactMarkdown
@@ -28,9 +25,9 @@ export const PostContent: React.FC<PostContentProps> = ({
             if (!match) {
               return <code className={className} {...props} />
             }
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore: Property 'meta' does not exist on type 'ElementData'
-            const meta = node?.data?.meta as string | undefined
+            const meta = (node as { data?: { meta?: string } })?.data?.meta as
+              | string
+              | undefined
 
             const applyHighlights: lineTagPropsFunction = (highlights) => {
               if (!meta) {
@@ -52,7 +49,6 @@ export const PostContent: React.FC<PostContentProps> = ({
             }
 
             return (
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
               <SyntaxHighlighter
                 language={match[1]}

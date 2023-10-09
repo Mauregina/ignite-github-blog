@@ -1,4 +1,3 @@
-/* eslint-disable react/no-children-prop */
 import { useParams } from 'react-router-dom'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { ArrowSquareOut, CaretLeft } from 'phosphor-react'
