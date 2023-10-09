@@ -1,27 +1,23 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Sobre o desafio
 
-Currently, two official plugins are available:
+Nesse desafio, vamos praticar a utilização de clientes HTTP consumindo a API do Github para criar um blog pessoal. A aplicação utilizará da API do GitHub para buscar issues de um repositório, dados do seu perfil e exibir elas como um blog.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Listagem do seu perfil com imagem, número de seguidores, nome e outras informações disponíveis pela API do GitHub.
+- Listar e filtrar todas as issues do repositório com um pequeno resumo do conteúdo dela
+- Criar uma página para exibir um post (issue) completo
 
-## Expanding the ESLint configuration
+Apesar de serem poucas funcionalidades, você vai precisar relembrar conceitos como:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Fetch / Axios
+- Roteamento e React Router DOM
+- Formulários
 
-- Configure the top-level `parserOptions` property like this:
+Para essa aplicação nós fornecemos um layout para que você possa seguir e implementar todas as funcionalidades desenhadas no figma. [https://www.figma.com/file/5yT9ZzZmRQRS4yivGGB3pl/Coffee-Delivery/duplicate](https://www.figma.com/community/file/1138814951106121051)
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<p float="left">
+ <img src="https://github.com/Mauregina/ignite-coffee-delivery/blob/master/public/prototipo1.png" width="800" />
+ <img src="https://github.com/Mauregina/ignite-coffee-delivery/blob/master/public/prototipo2.png" width="800" />
+ <img src="https://github.com/Mauregina/ignite-coffee-delivery/blob/master/public/prototipo3.png" width="800" />
+</p>
