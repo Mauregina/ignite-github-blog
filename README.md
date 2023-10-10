@@ -1,20 +1,20 @@
 # React + TypeScript + Vite
 
-# Sobre o desafio
+# About the Challenge
 
-Nesse desafio, vamos praticar a utilização de clientes HTTP consumindo a API do Github para criar um blog pessoal. A aplicação utilizará da API do GitHub para buscar issues de um repositório, dados do seu perfil e exibir elas como um blog.
+In this challenge, we will practice using HTTP clients to consume the GitHub API in order to create a personal blog. The application will use the GitHub API to fetch issues from a repository, data from your profile, and display them as a blog.
 
-- Listagem do seu perfil com imagem, número de seguidores, nome e outras informações disponíveis pela API do GitHub.
-- Listar e filtrar todas as issues do repositório com um pequeno resumo do conteúdo dela
-- Criar uma página para exibir um post (issue) completo
+- Display your profile with an image, number of followers, name, and other information available through the GitHub API.
+- List and filter all the issues from the repository with a brief summary of their content.
+- Create a page to display a complete post (issue).
 
-Apesar de serem poucas funcionalidades, você vai precisar relembrar conceitos como:
+Despite having only a few features, you will need to recall concepts such as:
 
 - Fetch / Axios
-- Roteamento e React Router DOM
-- Formulários
+- Routing and React Router DOM
+- Forms
 
-Para essa aplicação nós fornecemos um layout para que você possa seguir e implementar todas as funcionalidades desenhadas no figma. [https://www.figma.com/file/5yT9ZzZmRQRS4yivGGB3pl/Coffee-Delivery/duplicate](https://www.figma.com/community/file/1138814951106121051)
+For this application, we provide a layout for you to follow and implement all the functionalities designed in Figma. [https://www.figma.com/file/5yT9ZzZmRQRS4yivGGB3pl/Coffee-Delivery/duplicate](https://www.figma.com/community/file/1138814951106121051)
 
 <p float="left">
  <img src="https://github.com/Mauregina/ignite-github-blog/blob/master/public/screen1.png" width="800" />
